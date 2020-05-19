@@ -36,21 +36,21 @@ for div in main_divs:
         links.append(link)
 
 print("Buscando atividades avaliadas")
-notas = []
+grades = []
 for link in links:
     response = session.get(link)
     parsed_response = html.fromstring(response.text)
     activity_name = parsed_response.find('.//h2').text
     feedback_el = parsed_response.find('.//div[@class="feedback"]')
     activity_id = int(activity_name.split(" - ")[0].split("Cap ")[-1])
-    nota = {
+    grades.append({
         'atividade': activity_name,
         'feedback': feedback_el.text_content(),
         'id': activity_id
-    }
-    notas.append(nota)
+    })
 
-notas.sort(key=operator.itemgetter('id'))
-for nota in notas:
-    print(nota['atividade'])
-    print(nota['feedback'])
+grades.sort(key=operator.itemgetter('id'))
+for grade in grades:
+    print(" = = = = = = = = = = = = = = = = = =")
+    print(grade['atividade'])
+    print(grade['feedback'])
